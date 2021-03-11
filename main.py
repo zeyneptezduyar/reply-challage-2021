@@ -1,4 +1,5 @@
 import operator
+import random
 
 class Map:
     def __init__(self, width, height, building_num, num_antennas, building_list, antennas_list):
@@ -70,14 +71,14 @@ def get_mid_point(x1, y1, x2, y2):
         y = y1+y_mid
     else:
         y = y2+y_mid
-    if (x == map.width):
-        x -= 1
+    if (x > map.width):
+        x = random.randint(1, width_grid-1)
     if (y == map.height):
-        y -= 1
-    return Point(x,y)
+        y = random.randint(1, height_grid-1)
+    return x,y
 
 
-f = open("b.txt", "r")
+f = open("c.txt", "r")
 
 width_grid, height_grid = f.readline().rstrip('\n').split(" ")
 width_grid, height_grid = int(width_grid), int(height_grid)
@@ -111,30 +112,27 @@ mid_points = []
 for i in range(len(building_list_sorted)-1):
     b1 = building_list_sorted[i]
     b2 = building_list_sorted[i+1]
-    mid_point = get_mid_point(b1.x, b1.y, b2.x, b2.y)
-    if (map.matrix[mid_point.y][mid_point.x]):
-        mid_points.append(0)
-        continue
-    map.matrix[mid_point.x][mid_point.y] = True
+    mid_point_x, mid_point_y = get_mid_point(b1.x, b1.y, b2.x, b2.y)
+    mid_point = [mid_point_x, mid_point_y]
+    if (mid_point[0] > width_grid):
+        mid_point[0] = width_grid - 1
+    if (mid_point[1] > height_grid):
+        mid_point[1] = height_grid - 1
+    while (mid_point in mid_points):
+        mid_point = [random.randint(1, width_grid-1), random.randint(1, height_grid-1)]
     mid_points.append(mid_point)
 
 
-f = open("answerB.txt", "w")
+f = open("answerC.txt", "w")
 f.write(str(num_antennas))
 i = 0 
 
 for ant in antennas_list_sorted:
-    if (mid_point == 0):
-        ant.set_point(0)
-        continue
-    ant.set_point(mid_points[i].x, mid_points[i].y)
+    ant.set_point(mid_points[i][0], mid_points[i][1])
     i+=1
 
 i = 0
 for ant in antennas_list:
-    if(ant.point == 0):
-        i+=1
-        continue
     f.write("\n"+str(i) + " " + str(ant.point.x) + " " + str(ant.point.y))
     i+=1
 
