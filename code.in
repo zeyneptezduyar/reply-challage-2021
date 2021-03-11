@@ -66,8 +66,8 @@ placed_antennas = []
 for i in range(num_antennas):
     placing = []
     while True:
-        rand_x = random.randint(0, width_grid)
-        rand_y = random.randint(0, height_grid)
+        rand_x = random.randint(1, width_grid - 1)
+        rand_y = random.randint(1, height_grid - 1)
         placing = [rand_x, rand_y]
 
         if placing not in placed_antennas:

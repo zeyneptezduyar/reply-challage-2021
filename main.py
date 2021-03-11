@@ -37,8 +37,8 @@ placed_antennas = []
 for i in range(num_antennas):
 	placing = []
 	while True:
-		rand_x = random.randint(0, width_grid)
-		rand_y = random.randint(0, height_grid)
+		rand_x = random.randint(1, width_grid - 1)
+		rand_y = random.randint(1, height_grid - 1)
 		placing = [rand_x, rand_y]
 
 		if placing not in placed_antennas:
@@ -57,6 +57,8 @@ out.write(str(num_antennas) + '\n')
 
 # next m lines is id of antenna, x, y coordinates
 for i in range(num_antennas):
-	out.write(str(i) + ' ' + str(placed_antennas[i][0]) + ' ' + str(placed_antennas[i][1]) + '\n')
+	out.write(str(i) + ' ' + str(placed_antennas[i][0]) + ' ' + str(placed_antennas[i][1]))
+	if i != num_antennas - 1:
+		out.write('\n')
 
 out.close()
