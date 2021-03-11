@@ -1,3 +1,5 @@
+import math;
+
 
 class Map:
     def __init__(self, width, height, building_num, num_antennas):
@@ -28,6 +30,10 @@ class Antennas:
     def __str__(self):
         return "This antenna has the range of " + str(self.range_A) + " and speed " + str(self.speed)
 
+def calc_distance(x1, y1, x2, y2):
+    distance = abs(x1-x2) + abs(y1-y2)
+    return distance
+
 
 f = open("a.txt", "r")
 
@@ -57,3 +63,5 @@ for building in building_list:
 
 for antenna in antennas_list:
     print(antenna)
+
+print(calc_distance( 1,5, 4,17))
